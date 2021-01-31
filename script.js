@@ -96,7 +96,9 @@ const formmatCur = function (value, locale, currency) {
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
-  const movs = sort ? acc.slice().sort((a, b) => a - b) : acc.movements;
+  const movs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
 
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
@@ -202,20 +204,6 @@ let currentAccount, timer;
 updateUI(currentAccount);
 containerApp.style.opacity = 100;
  */
-//Create current date and time
-const now = new Date();
-const options = {
-  hour: 'numeric',
-  minute: 'numeric',
-  day: 'numeric',
-  month: 'numeric',
-  year: 'numeric',
-};
-
-labelDate.textContent = new Intl.DateTimeFormat(
-  currentAccount.locale,
-  options
-).format(now);
 
 btnLogin.addEventListener('click', function (e) {
   e.preventDefault(); //prevent form from submitting
@@ -230,6 +218,21 @@ btnLogin.addEventListener('click', function (e) {
     }`;
 
     containerApp.style.opacity = 100;
+
+    //Create current date and time
+    const now = new Date();
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    };
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
     //Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
